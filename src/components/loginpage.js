@@ -8,7 +8,10 @@ import { IS_LOGGED, SET_USER } from '../actions/actions'
 const Login = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState({
+    check: false,
+    msg: '',
+  })
   const [user, setUser] = useState({
     username: '',
     password: '',
@@ -22,7 +25,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (user.username === '' || user.password === '') {
-      alert('please fill all values')
+      setShow({ ...show, check: true, msg: 'Please fill all values' })
     } else {
       axios
         .post('https://loginsystemapp.herokuapp.com/user/validate', user)
@@ -31,9 +34,12 @@ const Login = () => {
             dispatch({ type: IS_LOGGED })
             dispatch({ type: SET_USER, payLoad: { name: user.username } })
             history.push('/welcome')
-            setShow(false)
           } else {
-            setShow(true)
+            setShow({
+              ...show,
+              check: true,
+              msg: 'Invalid username or password',
+            })
           }
         })
         .catch((err) => setShow(true))
@@ -46,7 +52,7 @@ const Login = () => {
       <br></br>
       {show && (
         <>
-          <Erromsg />
+          <Erromsg message={show.msg} />
           <br></br>
         </>
       )}
@@ -106,8 +112,8 @@ const Login = () => {
   )
 }
 
-const Erromsg = () => {
-  return <div style={{ color: 'red' }}>Invalid username or password</div>
+const Erromsg = (props) => {
+  return <div style={{ color: 'red' }}>{props.message}</div>
 }
 
 export default Login

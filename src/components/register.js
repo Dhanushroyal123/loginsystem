@@ -5,7 +5,10 @@ import { useHistory } from 'react-router-dom'
 
 const Register = () => {
   let history = useHistory()
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState({
+    check: false,
+    msg: '',
+  })
   const [user, setUser] = useState({
     username: '',
     email: '',
@@ -27,10 +30,10 @@ const Register = () => {
       user.password === '' ||
       user.confirmPass === ''
     ) {
-      alert('please fill all values')
+      setShow({ ...show, check: true, msg: 'Please fill all values' })
     }
     if (user.password != user.confirmPass) {
-      setShow(true)
+      setShow({ ...show, check: true, msg: 'Password Not Matched' })
     } else {
       axios
         .post('https://loginsystemapp.herokuapp.com/user/save', user)
@@ -42,7 +45,7 @@ const Register = () => {
     <>
       <h1 style={{ color: '#3f51b5' }}>Register</h1>
       <br></br>
-      {show && <div style={{ color: 'red' }}>Password not matched</div>}
+      {show && <div style={{ color: 'red' }}>{show.msg}</div>}
       <br></br>
       <div className='loginpage'>
         <form onSubmit={{ handleSubmit }}>
