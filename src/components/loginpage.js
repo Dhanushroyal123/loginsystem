@@ -21,19 +21,23 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    axios
-      .post('https://loginsystemapp.herokuapp.com/user/validate', user)
-      .then((res) => {
-        if (res.data.value < 300) {
-          dispatch({ type: IS_LOGGED })
-          dispatch({ type: SET_USER, payLoad: { name: user.username } })
-          history.push('/welcome')
-          setShow(false)
-        } else {
-          setShow(true)
-        }
-      })
-      .catch((err) => setShow(true))
+    if (user.username === '' || user.password === '') {
+      alert('please fill all values')
+    } else {
+      axios
+        .post('https://loginsystemapp.herokuapp.com/user/validate', user)
+        .then((res) => {
+          if (res.data.value < 300) {
+            dispatch({ type: IS_LOGGED })
+            dispatch({ type: SET_USER, payLoad: { name: user.username } })
+            history.push('/welcome')
+            setShow(false)
+          } else {
+            setShow(true)
+          }
+        })
+        .catch((err) => setShow(true))
+    }
   }
 
   return (
@@ -42,7 +46,7 @@ const Login = () => {
       <br></br>
       {show && (
         <>
-          <div style={{ color: 'red' }}>Invalid username or password</div>
+          <Erromsg />
           <br></br>
         </>
       )}
@@ -100,6 +104,10 @@ const Login = () => {
       </div>
     </div>
   )
+}
+
+const Erromsg = () => {
+  return <div style={{ color: 'red' }}>Invalid username or password</div>
 }
 
 export default Login

@@ -21,6 +21,14 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (
+      user.username === '' ||
+      user.email === '' ||
+      user.password === '' ||
+      user.confirmPass === ''
+    ) {
+      alert('please fill all values')
+    }
     if (user.password != user.confirmPass) {
       setShow(true)
     } else {
