@@ -31,6 +31,7 @@ const Register = () => {
       user.confirmPass === ''
     ) {
       setShow({ ...show, check: true, msg: 'Please fill all values' })
+      return
     }
     if (user.password != user.confirmPass) {
       setShow({ ...show, check: true, msg: 'Password Not Matched' })
