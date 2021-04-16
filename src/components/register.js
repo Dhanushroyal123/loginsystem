@@ -45,7 +45,7 @@ const Register = () => {
     <>
       <h1 style={{ color: '#3f51b5' }}>Register</h1>
       <br></br>
-      {show && <div style={{ color: 'red' }}>{show.msg}</div>}
+      {show && <Erromsg message={show.msg} />}
       <br></br>
       <div className='loginpage'>
         <form onSubmit={{ handleSubmit }}>
@@ -109,6 +109,12 @@ const Register = () => {
         <br></br>
       </div>
     </>
+  )
+}
+
+const Erromsg = (props) => {
+  return (
+    <div style={{ color: 'red', textAlign: 'center' }}>{props.message}</div>
   )
 }
 

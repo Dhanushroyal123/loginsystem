@@ -113,7 +113,9 @@ const Login = () => {
 }
 
 const Erromsg = (props) => {
-  return <div style={{ color: 'red' }}>{props.message}</div>
+  return (
+    <div style={{ color: 'red', textAlign: 'center' }}>{props.message}</div>
+  )
 }
 
 export default Login
