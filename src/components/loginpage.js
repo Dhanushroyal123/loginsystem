@@ -38,7 +38,7 @@ const Login = () => {
             setShow({
               ...show,
               check: true,
-              msg: 'Invalid username or password',
+              msg: 'Incorrect username or password.',
             })
           }
         })
@@ -50,7 +50,7 @@ const Login = () => {
     <div className='box'>
       <h1 style={{ color: '#3f51b5', textAlign: 'center' }}>Login</h1>
       <br></br>
-      {show && (
+      {show.check && (
         <>
           <Erromsg message={show.msg} />
           <br></br>
@@ -114,7 +114,20 @@ const Login = () => {
 
 const Erromsg = (props) => {
   return (
-    <div style={{ color: 'red', textAlign: 'center' }}>{props.message}</div>
+    <div
+      style={{
+        border: '1px solid red',
+        padding: '15px 12px 15px 12px',
+        borderRadius: '3px',
+        background: 'pink',
+        display: 'flex',
+        color: 'red',
+      }}
+    >
+      <div>
+        <span>{props.message}</span>
+      </div>
+    </div>
   )
 }
 
